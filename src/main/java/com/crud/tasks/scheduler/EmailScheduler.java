@@ -22,15 +22,14 @@ public class EmailScheduler {
         simpleEmailService.send(Mail.builder()
                 .receiverEmail(adminConfig.getAdminMail())
                 .subject(SUBJECT)
-                .message("Currently in database you got: " + countTasks())
+                .message("Currently in database you got: " + createTaskNumberMessage(taskRepository.count()))
                 .build());
     }
 
-    private String countTasks() {
-        long size = taskRepository.count();
-        if (size == 1) {
-            return size + " task";
+    private String createTaskNumberMessage(long numberOfTasks) {
+        if (numberOfTasks == 1) {
+            return numberOfTasks + " task";
         }
-        return size + " tasks";
+        return numberOfTasks + " tasks";
     }
 }
